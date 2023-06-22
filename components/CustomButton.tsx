@@ -1,16 +1,16 @@
 "use client";
 import { CustomButtonProps } from "@/types";
 import Image from "next/image";
-import { EventHandler } from "react";
 const CustomButton = ({
   title,
+  btnType = "button",
   containerStyles,
   handleClick,
 }: CustomButtonProps) => {
   return (
     <button
       disabled={false}
-      type={"button"}
+      type={btnType}
       className={`custom-btn ${containerStyles}`}
       onClick={handleClick}
     >
