@@ -53,7 +53,7 @@ const SearchManufacturer = ({
                   value={i}
                   key={i}
                   className={({ active }) =>
-                    `relative search-manufacturer_option  px-10 py-2 ${
+                    `relative search-manufacturer_option  py-2 px-6  ${
                       active ? "bg-primary-blue text-white" : "text-gray-900"
                     }`
                   }
