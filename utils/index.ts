@@ -49,11 +49,3 @@ export function generateCardImageURL(car: Car, angle?: string) {
 
 	return `${url}`;
 }
-export const updateSearchParams = (type :string , value :string) =>{
-	const SearchParams = new URLSearchParams(window.location.search);
-	SearchParams.set(type, value);
-	const newPath = `${
-		window.location.pathname
-	}?${SearchParams.toString()}#discover`;
-	return newPath;
-}

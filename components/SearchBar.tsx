@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SearchManufacturer } from "./";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
+import { SearchBarProps } from "@/types";
 const SearchButton = ({ otherClasses }: { otherClasses: string }) => {
   return (
     <>
@@ -13,50 +14,36 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => {
   );
 };
 
-const SearchBar = () => {
+const SearchBar = ({ setManufacturer, setModel }: SearchBarProps) => {
 
-  const [manufacturer, setManufacturer] = useState("");
-  const [model, setModel] = useState("");
+  const [searchManufacturer, setSearchManufacturer] = useState("");
+  const [searchModel, setSearchModel] = useState("");
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (manufacturer === "" && model === ""){
+    if (searchManufacturer === "" && searchModel === ""){
       return alert("Please Fill in the Search bar");
     }
-    updateSearchParams(manufacturer.toLowerCase(), model.toLowerCase());
+    setManufacturer(searchManufacturer.toLowerCase());
+    setModel(searchModel.toLowerCase());
   };
 
-  const updateSearchParams = (manufacturer: string, model: string) =>{
-    const SearchParams = new URLSearchParams(window.location.search);
-    if (model){
-      SearchParams.set("model", model);
-    }else{
-      SearchParams.delete("model");
-    }
-    if (manufacturer){
-      SearchParams.set("manufacturer", manufacturer);
-    }else{
-      SearchParams.delete("manufacturer");
-    }
-    
-    const newPath = `${window.location.pathname}?${SearchParams.toString()}#discover`
-    router.push(newPath);
-  }
+
 
   return (
     <form className="searchbar" onSubmit={handleSearch}>
       <div className="searchbar__item">
         <SearchManufacturer
-          manufacturer={manufacturer}
-          setManufacturer={setManufacturer}
+          selected={searchManufacturer}
+          setSelected={setSearchManufacturer}
         />
         <SearchButton otherClasses={"sm:hidden"} />
       </div>
       <div className="searchbar__item">
         <Image src="/model-icon.png" alt="car model" width={25} height={25} className="absolute w-[20px] h-[20px] ml-4" />
-        <input type="text" name="model" value={model} onChange={(e) => setModel(e.target.value)} placeholder="Model" className="searchbar__input" />
+        <input type="text" name="model" value={searchModel} onChange={(e) => setSearchModel(e.target.value)} placeholder="Model" className="searchbar__input" />
         <SearchButton otherClasses={"sm:hidden"} />
       </div>
       <SearchButton otherClasses={"max-sm:hidden"} />
